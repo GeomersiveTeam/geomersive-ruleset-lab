@@ -1,0 +1,16 @@
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Required files exist
+        run: test -s README.md && test -s CONTRIBUTING.md
+      - name: No trailing whitespace in Markdown
+        run: "! grep -rnE ' +$' --include='*.md' ."
